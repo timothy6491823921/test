@@ -1,0 +1,35 @@
+import random
+
+def generate_secret_number():
+    """生成隨機的三位數字作為謎題。"""
+    return str(random.randint(100, 999))
+
+def evaluate_guess(secret, guess):
+    """評估玩家的猜測，返回提示資訊。"""
+    correct_position = 0
+    correct_digit = 0
+    # 計算位置正確的數字
+    for s, g in zip(secret, guess):
+        if s == g:
+            correct_position += 1
+    
+    # 計算數字正確但位置錯誤的數字
+    for g in guess:
+        if g in secret:
+            correct_digit += 1
+    
+    # 去掉位置正確的重複計算
+    correct_digit -= correct_position
+    return correct_position, correct_digit
+
+def play_game():
+    """運行遊戲主邏輯。"""
+    secret_number = generate_secret_number()
+    attempts = 0
+    print("歡迎來到魔法數字謎題！")
+    print("你需要猜一個三位數字，我會給你提示。")
+    print("提示說明：")
+    print("- '位置正確的數字'：數字和位置都正確的個數。")
+    print("- '位置錯誤的數字'：數字正確但位置錯誤的個數。\n")
+
+    while
