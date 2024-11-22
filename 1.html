@@ -1,35 +1,85 @@
-import random
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數字猜謎遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        #game {
+            margin: 20px auto;
+            padding: 20px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>數字猜謎遊戲</h1>
+    <div id="game">
+        <p>我選了一個 1 到 100 之間的隨機數字。試著猜出它！</p>
+        <input type="number" id="guess" placeholder="輸入你的猜測">
+        <button onclick="checkGuess()">提交</button>
+        <p id="message"></p>
+    </div>
 
-def generate_secret_number():
-    """生成隨機的三位數字作為謎題。"""
-    return str(random.randint(100, 999))
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
 
-def evaluate_guess(secret, guess):
-    """評估玩家的猜測，返回提示資訊。"""
-    correct_position = 0
-    correct_digit = 0
-    # 計算位置正確的數字
-    for s, g in zip(secret, guess):
-        if s == g:
-            correct_position += 1
-    
-    # 計算數字正確但位置錯誤的數字
-    for g in guess:
-        if g in secret:
-            correct_digit += 1
-    
-    # 去掉位置正確的重複計算
-    correct_digit -= correct_position
-    return correct_position, correct_digit
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("guess").value);
+            attempts++;
 
-def play_game():
-    """運行遊戲主邏輯。"""
-    secret_number = generate_secret_number()
-    attempts = 0
-    print("歡迎來到魔法數字謎題！")
-    print("你需要猜一個三位數字，我會給你提示。")
-    print("提示說明：")
-    print("- '位置正確的數字'：數字和位置都正確的個數。")
-    print("- '位置錯誤的數字'：數字正確但位置錯誤的個數。\n")
+            if (isNaN(userGuess)) {
+                document.getElementById("message").textContent = "請輸入有效的數字！";
+                return;
+            }
 
-    while
+            if (userGuess === secretNumber) {
+                document.getElementById("message").textContent = `恭喜你！猜中了！總共嘗試了 ${attempts} 次。`;
+                document.getElementById("message").style.color = "green";
+            } else if (userGuess < secretNumber) {
+                document.getElementById("message").textContent = "太低了！再試試。";
+                document.getElementById("message").style.color = "blue";
+            } else {
+                document.getElementById("message").textContent = "太高了！再試試。";
+                document.getElementById("message").style.color = "blue";
+            }
+        }
+    </script>
+</body>
+</html>
